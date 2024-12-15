@@ -1,0 +1,73 @@
+<!--挿入位置に合わせて全体的にインデント-->
+    <!--表示結果がページ分割されているかどうかを示すブール値です-->
+    <!--具体的には、オブジェクトの個数がpaginate_byと等しいか-->
+    <!--それ以下の場合にはfalseにセットされます-->
+    {% if is_paginated %}
+        <!--左右の中央に配置-->
+        <ul class="pagination" style="justify-content:center">
+            <!--
+            前ページへのリンク
+            Page.has_previous:前のページがある場合にTrueを返します
+            -->
+            {% if page_obj.has_previous %}
+            <!--page_objは現在のページ情報を保持するオブジェクト-->
+            <!--.has_previousは現在のページが２ページ以降である場合にTrue-->
+                <li class="page-item">
+                    <!--クエリパラメータに情報を与えるには?で基本部分とを区切る必要がある-->
+                    <a class="page-link"
+                        href="?page={{ page_obj.previous_page_number }}"
+                        aria-label="Previous">
+                        <!--aria-labelはHTML要素についてのラベル（説明文）見た目には表示されない、文字として読み上げることを防止する-->
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            {% endif %}
+            <!--
+            ページ数の表示
+            Pagenator.page_range: [1,2,3,4] のように、1 から始まるページ番号です
+            -->
+            {% for num in paginator.page_range %}
+            <!--
+            ページ番号が存在しない場合
+            Page.number: 1から数えたページ番号です
+            -->
+                {% if page_obj.number == num %}
+                    <li class="page-item active">
+                        <span class="page-link">{{ num }}</span>
+                    </li>
+                    {% else %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{num}}">{{num}}</a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+            <!--
+            次ページへのリンク
+            Page.has_next(): 次のページがある場合に True を返します
+            -->
+            {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link"
+                        href="?page={{ page_obj.next_page_number }}"
+                        aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    {% endif %}
+<!--
+pagination 
+→   is_paginated:
+        djangoで使用されるフラグの一つ　
+        例:ListViewを使用した場合　is_paginatedはビューのコンテキストの一つ
+        pagination(複数ページにする)の条件
+        ・ページネーションが有効である(paginate_by属性が設定されている)
+        ・クエリセットのアイテム数が、1ページを超えている(paginate_byの最大数が１より大きい場合)
+
+    if page_obj.has_previous
+        ページネーション機能で使用される属性　現在のページが最初のページ以外の場合にTrueを返す（前のページが存在している場合に）
+        主にテンプレートで前のページへのリンクを作成する際に使用する
+
+
+-->

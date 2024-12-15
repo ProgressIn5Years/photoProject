@@ -1,0 +1,21 @@
+# SQLiteのデータベースファイル
+db.sqlite3
+
+# Pythonキャッシュフォルダ
+__pycache__/
+
+# 仮想環境フォルダ（必要に応じて変更）
+venv/
+
+# Djangoのメディアアップロードフォルダ
+media/
+
+# IDEやエディタの設定ファイル
+*.pyc
+*.pyo
+.spyproject/
+
+# 静的ファイル（再生成可能な場合）
+static/
+
+media/
